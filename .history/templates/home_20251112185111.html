@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django ToDo App</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+      padding: 30px;
+      max-width: 1000px;
+      width: 90%;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .title h2 {
+      font-weight: 600;
+      color: #007bff;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      margin-bottom: 15px;
+    }
+
+    .task-buttons button {
+      margin-left: 5px;
+      border-radius: 8px;
+    }
+
+    #taskInput {
+      border-radius: 10px 0 0 10px;
+    }
+
+    #addBtn {
+      border-radius: 0 10px 10px 0;
+    }
+
+    .completed-task {
+      text-decoration: line-through;
+      color: #6c757d;
+    }
+
+    .section-title {
+      font-weight: 500;
+      color: #555;
+    }
+
+    .date-text {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      color: #777;
+    }
+
+    @media (max-width: 768px) {
+      .col-md-6 {
+        margin-bottom: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <h2>Django ToDo App</h2>
+      <p class="date-text">My Day - <span id="todayDate"></span></p>
+    </div>
+
+    <div class="row">
+      <!-- Left: Active Tasks -->
+      <div class="col-md-6">
+        <h5 class="section-title mb-3">Active Tasks</h5>
+        <div id="taskList"></div>
+      </div>
+
+      <!-- Right: Completed Tasks -->
+      <div class="col-md-6">
+        <h5 class="section-title mb-3">Completed Tasks</h5>
+        <div id="completedTasks"></div>
+      </div>
+    </div>
+
+    <!-- Add Task Input -->
+    <div class="input-group mt-4">
+      <input type="text" id="taskInput" class="form-control" placeholder="Add a task">
+      <button class="btn btn-primary" id="addBtn"><i class="bi bi-plus-lg"></i> Add</button>
+    </div>
+
+    <p class="footer">✨ Stay productive and positive ✨</p>
+  </div>
+<!
+  <script>
+    document.getElementById('todayDate').textContent = new Date().toDateString();
+
+    const taskInput = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+    const taskList = document.getElementById('taskList');
+    const completedTasks = document.getElementById('completedTasks');
+
+    addBtn.addEventListener('click', addTask);
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (taskText === '') return alert('Please enter a task!');
+      
+      const taskCard = document.createElement('div');
+      taskCard.className = 'card p-3';
+      taskCard.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center">
+          <span>${taskText}</span>
+          <div class="task-buttons">
+            <button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i> Done</button>
+            <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+            <button class="btn btn-info btn-sm text-white"><i class="bi bi-pencil"></i></button>
+          </div>
+        </div>
+      `;
+
+      const [doneBtn, deleteBtn, editBtn] = taskCard.querySelectorAll('button');
+
+      doneBtn.addEventListener('click', () => markAsDone(taskCard, taskText));
+      deleteBtn.addEventListener('click', () => taskCard.remove());
+      editBtn.addEventListener('click', () => editTask(taskCard));
+
+      taskList.appendChild(taskCard);
+      taskInput.value = '';
+    }
+
+    function markAsDone(taskCard, text) {
+      taskCard.remove();
+      const doneCard = document.createElement('div');
+      doneCard.className = 'card p-3 completed-task';
+      doneCard.textContent = text;
+      completedTasks.appendChild(doneCard);
+    }
+
+    function editTask(taskCard) {
+      const span = taskCard.querySelector('span');
+      const newText = prompt('Edit your task:', span.textContent);
+      if (newText) span.textContent = newText;
+    }
+  </script> {% endcomment %}
+</body>
+</html>
